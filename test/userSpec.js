@@ -17,7 +17,7 @@ describe('User', function() {
   })
   it('should save to the database', function(done) {
     User.find({ 'email' : 's@gmail.com' }, function(err, users) {
-      expect(users.count).toBe(1)
+      expect(users.length).toBe(1)
       done();
     });
   });
