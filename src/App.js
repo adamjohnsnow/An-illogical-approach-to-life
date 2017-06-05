@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import './App.css';
+import SignUp from './SignUp'
+import SignIn from './SignIn'
 
-export default class Test extends Component {
-  render() {
-    return (
-      <div>
-      <h1> im somthing </h1>
-      </div>
-    )
-  }
+
+const App = () => {
+  return(
+    <div>
+      <SignUp/>
+      <SignIn/>
+    </div>
+  )
 }
+
+export default App
