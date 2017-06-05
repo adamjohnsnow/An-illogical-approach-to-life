@@ -1,15 +1,15 @@
-// import express from 'express';
-// import React from 'react'
-const http = require('http');
-// const html = require('html');
 const express = require('express');
-const app = express();
-app.set('views', './');
-app.set('view engine', 'html');
-app.use(express.static(__dirname + '/public'));
+const morgan = require('morgan');
+const path = require('path')
 
-app.get('/', (request, response) => {
-  response.send('HYelleleo');
+const app = express();
+
+app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
+
+app.use(express.static(path.resolve(__dirname, '..', 'build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
 });
 
-app.listen(8000)
+module.exports = app;
