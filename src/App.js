@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Link, Route } from "react-router-dom";
 
 import './App.css';
 import SignUp from './SignUp'
@@ -10,13 +10,16 @@ const App = () => {
   return(
     <BrowserRouter>
       <div>
+      <Route exact path="/" render ={() =>(
+        <div>
         <Link to={"/SignIn"}> Sign In</Link>
         <br/>
         <Link to={"/SignUp"}> Sign Up</Link>
-        <Switch>
+        </div>
+      )}/>
+
           <Route exact path="/SignIn" component={() => <SignIn/>}/>
           <Route exact path="/SignUp" component={() => <SignUp/>}/>
-        </Switch>
       </div>
     </BrowserRouter>
   )
