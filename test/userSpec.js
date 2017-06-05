@@ -1,11 +1,11 @@
 process.env.NODE_ENV = 'test'
-var User = require('../src/User');
+var User = require('../src/models/User');
 var assert = require('assert');
 var mongoose = require('mongoose');
 
 describe('User', function() {
 
-  beforeAll(funciton(done) {
+  beforeAll(function(done) {
     User.remove({}, function(err) {
       var testUser = new User();
       testUser.email = 's@gmail.com';
@@ -15,4 +15,11 @@ describe('User', function() {
       })
     })
   })
+  it('should save to the database', function(done) {
+    User.find({ 'email' : 's@gmail.com' }, function(err, users) {
+      expect(users.count).toBe(1)
+      done();
+    });
+  });
+
 })
