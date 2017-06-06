@@ -9,6 +9,8 @@ describe('Character', function() {
     Character.remove({}, function(err) {
       var testCharacter = new Character();
       testCharacter.name = 'Test Warrior';
+      testCharacter.userId = 'ABC1';
+      testCharacter.avatar = '/creature.jpg';
       testCharacter.save(function(err) {
         done();
       })
@@ -18,6 +20,8 @@ describe('Character', function() {
   it('characters should save to the database', function(done) {
     Character.find({ 'name' : 'Test Warrior' }, function(err, characters) {
       expect(characters.length).toBe(1)
+      expect(characters[0].userId).toBe('ABC1')
+      expect(characters[0].avatar).toBe('/creature.jpg')
       expect(characters[0].xp).toBe(0)
       expect(characters[0].level).toBe(1)
       expect(characters[0].attack).toBe(0)
