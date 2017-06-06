@@ -2,8 +2,8 @@ import React from 'react';
 import { BrowserRouter, Link, Route } from "react-router-dom";
 
 import './App.css';
-import SignUp from './SignUp'
 import SignIn from './SignIn'
+import CharacterCreation from './CharacterCreation'
 
 
 const App = () => {
@@ -12,14 +12,12 @@ const App = () => {
       <div>
       <Route exact path="/" render ={() =>(
         <div>
-        <Link to={"/SignIn"}> Sign In</Link>
+          <SignIn/>
         <br/>
-        <Link to={"/SignUp"}> Sign Up</Link>
+          <CharacterCreation/>
+
         </div>
       )}/>
-
-          <Route exact path="/SignIn" component={() => <SignIn/>}/>
-          <Route exact path="/SignUp" component={() => <SignUp/>}/>
       </div>
     </BrowserRouter>
   )

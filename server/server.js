@@ -28,6 +28,7 @@ app.get('/', function (req, res) {
   res.render('signup', {
     message: req.flash('wrongPassword').join()
   });
+
 });
 
 app.post('/login', function(req, res) {
@@ -88,3 +89,9 @@ app.get('/signout', function(req, res) {
 })
 
 module.exports = app;
+// app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
+  // res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'));
+  // app.use(bodyParser.urlencoded({ extended: true }));
+  // app.use(bodyParser.json());
+// app.use(express.static(path.resolve(__dirname, '..', 'public')));
+  // res.send('hello')
