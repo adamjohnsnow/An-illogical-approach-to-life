@@ -1,15 +1,79 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path')
+var User = require('../src/models/User');
+var bodyParser = require('body-parser');
+var session = require('express-session');
+var bcrypt = require('bcryptjs');
+var flash = require('connect-flash');
 
 const app = express();
 
-app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(flash());
+app.use(session({
+  secret: 'keyboard cat',
+  resave: true,
+  saveUninitialized: true,
+}));
+app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/public/views'));
 
-app.use(express.static(path.resolve(__dirname, '..', 'build')));
+// app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
+//
+// app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+// });
+
+app.get('/', function (req, res) {
+  res.render('signup', {
+    message: req.flash('wrongPassword').join()
+  });
 });
+
+
+
+app.post('/login', function(req, res) {
+  sess = req.session
+  var email = req.body.email
+  var password = req.body.password
+  User.find({email: email}, function(err, users) {
+    if (bcrypt.compareSync(password, users[0].password)) {
+      sess.userId = users[0]._id
+      res.redirect('/character')
+    }else{
+      req.flash('wrongPassword', "You could not be logged in, please try again");
+      res.redirect('/login')
+    }
+  });
+});
+
+app.post('/signup', function(req, res) {
+  if (req.body.password !== req.body.passwordConfirmation) {
+    req.flash('wrongPassword', "Your passwords did not match, please try again");
+    res.redirect('/')
+  }else{
+    sess = req.session
+    var user = new User();
+    user.email = req.body.email
+    user.password = bcrypt.hashSync(req.body.password, 10);
+    user.save();
+    sess.userId = user._id
+    console.log(user._id)
+    res.redirect('/character/new')
+  }
+});
+
+app.post('/character', function(req, res) {
+
+})
+
+app.post('/signout', function(req, res) {
+  req.session = undefined
+  res.redirect('/login')
+})
 
 module.exports = app;
