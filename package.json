@@ -16,21 +16,18 @@
     "morgan": "^1.8.2",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-<<<<<<< HEAD
     "react-router-dom": "^4.1.1"
   },
-  "devDependencies": {
-    "enzyme": "^2.8.2",
-    "jest": "^20.0.4",
-    "react-addons-test-utils": "^15.5.1",
-=======
-    "zombie": "^5.0.5"
-  },
+  
   "devDependencies": {
     "jasmine": "^2.6.0",
->>>>>>> c24d07c7cf8fda0d7d451b912017a6a6e94216a4
-    "react-scripts": "1.0.7"
+    "enzyme": "^2.8.2",
+    "react-scripts": "1.0.7",
+    "jest": "^20.0.4",
+    "react-addons-test-utils": "^15.5.1",
+    "zombie": "^5.0.5"
   },
+  
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
