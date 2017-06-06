@@ -29,8 +29,9 @@ describe('Sign Up', function() {
 
 describe('Log in', function() {
   const browser = new Browser();
+
   before(function(done) {
-      browser.visit('/', done);
+    browser.visit('/', done);
   })
 
   it('user can log in but has no character yet', function(done){
@@ -42,4 +43,12 @@ describe('Log in', function() {
       browser.assert.text('h2', 'Create a new character')
     }).then(done, done);
   });
+
+  it('user can signout when logged in', function(done){
+    browser.clickLink('Sign Out').then(function() {
+      assert.ok(browser.success);
+      browser.assert.text('h2', 'Sign Up or Log In')
+    }).then(done, done);
+  });
+
 });
