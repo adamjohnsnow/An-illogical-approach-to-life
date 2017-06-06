@@ -10,6 +10,7 @@ var characterSchema = new Schema({
   xp: { type: Number, default: 0 },
   attack: { type: Number, default: 0 },
   defence: { type: Number, default: 0 },
+  hp: { type: Number, default: 20 },
   level: { type: Number, default: 1 }
 });
 

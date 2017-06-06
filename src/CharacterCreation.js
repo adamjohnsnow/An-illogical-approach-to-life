@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 export default class CharacterCreation extends Component {
 
   handleClick = () => {
-    console.log('hi')
+
   }
 
   render(){
