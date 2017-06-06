@@ -38,8 +38,8 @@ app.get('/', function (req, res) {
 
 app.post('/login', function(req, res) {
   sess = req.session
-  var email = req.body.email
-  var password = req.body.password
+  var email = req.body.login_email
+  var password = req.body.login_password
   User.find({email: email}, function(err, users) {
     if (bcrypt.compareSync(password, users[0].password)) {
       sess.userId = users[0]._id
@@ -52,23 +52,30 @@ app.post('/login', function(req, res) {
 });
 
 app.post('/signup', function(req, res) {
+  var email = req.body.email
   if (req.body.password !== req.body.passwordConfirmation) {
     req.flash('wrongPassword', "Your passwords did not match, please try again");
     res.redirect('/')
   }else{
-    sess = req.session
-    var user = new User();
-    user.email = req.body.email
-    user.password = bcrypt.hashSync(req.body.password, 10);
-    user.save();
-    sess.userId = user._id
-    console.log(user._id)
-    res.redirect('/character/new')
+    User.find({ email : email }, function(err, users) {
+      console.log(users, email)
+      if (users.length == 0) {
+        sess = req.session
+        var user = new User();
+        user.email = req.body.email
+        user.password = bcrypt.hashSync(req.body.password, 10);
+        user.save();
+        res.redirect('character/new')
+      }else{
+        req.flash('wrongPassword', "You could not be signed up, please try again or try logging in");
+        res.redirect('/')
+      }
+    })
   }
 });
 
-app.post('/character', function(req, res) {
-
+app.get('/character/new', function(req, res) {
+  res.render('character/new')
 })
 
 app.post('/signout', function(req, res) {
